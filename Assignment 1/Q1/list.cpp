@@ -67,16 +67,29 @@ Node* List::reverse(Node* head) {
 
 int List::cycle_size(Node* head) {
 	Node* iterator = head;
+	Node* addresses[1000000];
 	if (!head) {
 		return 0;
 	}
-	int length = 1;
-	while (iterator->getNext() != head) {
-		length++;
+	int addr_len = 0;
+	Node* cycle_start = NULL;
+	while (!cycle_start) {
+		for (int i = 0; i < addr_len; i++) {
+			if (addresses[i] == iterator) {
+				cycle_start = iterator;
+			}
+		}
+		addresses[addr_len] = iterator;
+		addr_len++;
 		iterator = iterator->getNext();
 		if (!iterator) {
 			return 0;
 		}
 	}
-	return length;
+	int cycle_size = 1;
+	while(iterator != cycle_start) {
+		cycle_size++;
+		iterator = iterator->getNext();
+	}
+	return cycle_size;
 }

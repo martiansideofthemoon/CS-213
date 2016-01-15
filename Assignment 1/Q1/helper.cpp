@@ -12,4 +12,11 @@ void print(Node* x) {
 
 int main() {
 	List l;
+	Node* a = new Node(1, NULL);
+	Node* b = new Node(2, a);
+	Node* c = new Node(3, b);
+	Node* d = new Node(4, c);
+	Node* e = new Node(5, d);
+	//a->setNext(b);
+	cout << l.cycle_size(e) << endl;
 }
