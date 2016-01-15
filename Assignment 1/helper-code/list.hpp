@@ -2,6 +2,8 @@
 #define _LIST_HPP_
 #include "node.hpp"
 
+class List {
+public:
 /**
  * Inserts a new node into the list
  * Params:
@@ -49,5 +51,6 @@ Node* reverse(Node* head);
  * int : the size of the cycle, 0 if there is none.
  */
 int cycle_size(Node* head);
+};
 
 #endif // _LIST_HPP_
