@@ -7,6 +7,10 @@ private:
 	int frequency;
 	int last_used;
 public:
+	Frame(int id) {
+		page_id = id;
+	}
+
 	Frame(int id, int ref_no) {
 		page_id = id;
 		last_used = ref_no;
@@ -24,13 +28,17 @@ public:
 		return last_used;
 	}
 
-	int increment(int ref_no) {
+	void increment(int ref_no) {
 		frequency += 1;
 		last_used = ref_no;
+	}
+
+	void reset() {
+		frequency = 0;
 	}
 };
 int main() {
 	int ids, frames, references;
 	cin >> ids >> frames >> references;
-	Frame all_pages[100000];
+	Frame all_pages[frames];
 }

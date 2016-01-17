@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Node* List::insert(Node* head, int val, int pos) {
+Node* insert(Node* head, int val, int pos) {
 	if (pos == 0) {
 		Node* x = new Node(val, head);
 		return x;
@@ -17,7 +17,7 @@ Node* List::insert(Node* head, int val, int pos) {
 	return head;
 }
 
-Node* List::remove(Node* head, int pos) {
+Node* remove(Node* head, int pos) {
 	if (pos == 0) {
 		return (*head).getNext();
 	}
@@ -30,7 +30,7 @@ Node* List::remove(Node* head, int pos) {
 	return head;
 }
 
-int List::size(Node* head) {
+int size(Node* head) {
 	Node* iterator = head;
 	if (!head) {
 		return 0;
@@ -44,7 +44,7 @@ int List::size(Node* head) {
 	return length;
 }
 
-Node* List::reverse(Node* head) {
+Node* reverse(Node* head) {
 	if (!head) {
 		return NULL;
 	}
@@ -65,31 +65,21 @@ Node* List::reverse(Node* head) {
 	return current;
 }
 
-int List::cycle_size(Node* head) {
-	Node* iterator = head;
-	Node* addresses[1000000];
-	if (!head) {
-		return 0;
-	}
-	int addr_len = 0;
-	Node* cycle_start = NULL;
-	while (!cycle_start) {
-		for (int i = 0; i < addr_len; i++) {
-			if (addresses[i] == iterator) {
-				cycle_start = iterator;
+int cycle_size(Node* head) {
+	int length = 0;
+	Node* slow_ptr = head;
+	Node* fast_ptr = head;
+	while(slow_ptr && fast_ptr) {
+		fast_ptr = fast_ptr->getNext()->getNext();
+		slow_ptr = slow_ptr->getNext();
+		if(slow_ptr == fast_ptr) {
+			fast_ptr = fast_ptr->getNext();
+			length++;
+			while (fast_ptr != slow_ptr) {
+				fast_ptr = fast_ptr->getNext();
+				length++;
 			}
 		}
-		addresses[addr_len] = iterator;
-		addr_len++;
-		iterator = iterator->getNext();
-		if (!iterator) {
-			return 0;
-		}
 	}
-	int cycle_size = 1;
-	while(iterator != cycle_start) {
-		cycle_size++;
-		iterator = iterator->getNext();
-	}
-	return cycle_size;
+	return length;
 }
