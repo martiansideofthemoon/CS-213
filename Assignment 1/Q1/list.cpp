@@ -1,6 +1,4 @@
 #include "list.hpp"
-#include <iostream>
-using namespace std;
 
 Node* insert(Node* head, int val, int pos) {
 	if (pos == 0) {
