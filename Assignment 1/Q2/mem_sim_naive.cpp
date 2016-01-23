@@ -53,6 +53,8 @@ int main() {
 	int size = 0;
 	int hits = 0, misses = 0;
 	for (int i = 0; i < references; i++) {
+		//if (i%10000 == 0)
+		//	cout << i << endl;
 		int page;
 		cin >> page;
 		list<Frame>::iterator least_frequent_page = frames.end();
@@ -81,6 +83,7 @@ int main() {
 				Frame* f = new Frame(page, i);
 				frames.push_back(*f);
 			} else {
+				//cout << "Least frequent page is " << least_frequent_page->getPageId() << endl;
 				frames.erase(least_frequent_page);
 				Frame* f = new Frame(page, i);
 				frames.push_back(*f);

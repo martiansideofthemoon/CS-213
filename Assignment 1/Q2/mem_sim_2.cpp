@@ -2,13 +2,28 @@
 #include <iostream>
 using namespace std;
 void print_list(list<int> i) {
-	cout << "List: ";
+	cout << "List: " << endl;
 	list<int>::iterator c = i.begin();
 	while(c != i.end()) {
 		cout << *c << " ";
 		c++;
 	}
 	cout << endl;
+}
+
+void print_list(list< list<int>* > i) {
+	cout << "List: " << endl;
+	list< list<int>* >::iterator c = i.begin();
+	while(c != i.end()) {
+		list<int>::iterator a = (**c).begin();
+		while (a != (**c).end()) {
+			cout << *a << " ";
+			a++;
+		}
+		c++;
+		cout << endl;
+	}
+	cout << "End List" << endl;
 }
 class memory {
 private:
@@ -45,7 +60,9 @@ public:
 				(**(current_pages.begin())).erase(abc);
 				if ((**(current_pages.begin())).begin() == (**(current_pages.begin())).end()) {
 					current_pages.erase(current_pages.begin());
+					freq_ptrs[page_frequency[*abc]] = current_pages.end();
 				}
+				page_frequency[*abc] = 0;
 			}
 			// Insert the page normally
 			list< list<int>* >::iterator single_freq = freq_ptrs[1];
