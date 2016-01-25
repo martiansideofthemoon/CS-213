@@ -77,6 +77,7 @@ int cycle_size(Node* head) {
 				fast_ptr = fast_ptr->getNext();
 				length++;
 			}
+			break;
 		}
 	}
 	return length;

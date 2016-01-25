@@ -46,6 +46,14 @@ public:
 		frequency = 0;
 	}
 };
+void print_list(list<Frame> &f) {
+	list<Frame>::iterator a = f.begin();
+	while (a != f.end()) {
+		cout << a->getPageId() << " - ";
+		a++;
+	}
+	cout << endl;
+}
 int main() {
 	int page_max, num_frames, references;
 	cin >> page_max >> num_frames >> references;
@@ -60,9 +68,12 @@ int main() {
 		list<Frame>::iterator least_frequent_page = frames.end();
 		list<Frame>::iterator x = frames.begin();
 		bool pageFound = false;
+		bool lru_used = false;
 		while (x != frames.end()) {
 			if (size > 0 && (least_frequent_page == frames.end() || x->getFrequency() <= least_frequent_page->getFrequency())) {
-				if (x->getFrequency() < least_frequent_page->getFrequency()) {
+				if (least_frequent_page == frames.end()) {
+					least_frequent_page = x;
+				} else if (x->getFrequency() < least_frequent_page->getFrequency()) {
 					least_frequent_page = x;
 				} else if (x->getLastUsed() < least_frequent_page->getLastUsed()) {
 					least_frequent_page = x;
