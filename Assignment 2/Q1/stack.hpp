@@ -7,8 +7,25 @@ class stack {
 private:
 	// Add your member variables here
 	list<T> elements;
-	int num = 0;
+	int num;
 public:
+	/**
+	 * Default constructor for the stack class
+	 */
+	 stack();
+
+	/**
+	 * Copy constructor for the stack class.
+	 * Params:
+	 * const stack &to_copy_to : A reference to the stack object to be copied
+	 * into.
+	 */
+	stack(const stack &to_copy_to);
+
+	/**
+	 * Default destructor for the stack class
+	 */
+	~stack();
 
 	/**
 	 * Pushes an object of type T on the top of the stack
@@ -16,7 +33,6 @@ public:
 	 * T n : The object to be pushed on the top of the stack
 	 */
 	void push(T n);
-
 
 	/**
 	 * Gives the element on the top of the stack, if any
@@ -31,12 +47,12 @@ public:
 	/**
 	 * Removes the element on the top of the stack, if any
 	 */
-	void pop();
+	 void pop();
 
 	/**
-	 * Returns the number of elements in the stack
+	 * Returns the number of elements in the queue
 	 * Return value:
-	 * int : Number of elements in the stack
+	 * int : Number of elements in the queue
 	 */
 	int size();
 };

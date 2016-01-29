@@ -31,4 +31,6 @@ int main() {
 	cout << ab.size() << endl;
 	ab.top(&abc);
 	cout << abc << endl;
+	c.top(&abc);
+	cout << abc << endl;
 }

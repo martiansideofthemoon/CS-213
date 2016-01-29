@@ -1,5 +1,19 @@
 #include "stack.hpp"
-#include <iostream>
+
+template <class T>
+stack<T>::stack() {
+	num = 0;
+}
+
+template <class T>
+stack<T>::stack(const stack &to_copy_to) {
+	*this = to_copy_to;
+}
+
+template <class T>
+stack<T>::~stack() {
+
+}
 
 template <class T>
 void stack<T>::push(T n) {
