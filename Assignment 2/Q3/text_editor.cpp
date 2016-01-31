@@ -53,6 +53,7 @@ public:
 	}
 
 	void erase(int k, int normal) {
+		// Add condition for zero length string?
 		string w = a->substr(a->length() - k, k);
 		a->erase(a->length() - k, k);
 		if (normal == 1) {
