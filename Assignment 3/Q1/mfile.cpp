@@ -13,8 +13,10 @@ int MFile::init(string fname, int line_size) {
 }
 
 string MFile::readNext() {
-	string s;
-	getline(m_fs, s);
+	m_fs.read(buf, m_line_size);
+
+	buf[m_fs.gcount()] = 0;
+	string s(buf);
   return s;
 }
 

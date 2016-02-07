@@ -4,7 +4,7 @@ import math
 def id_generator(size = 6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
 lines = 100000
-letters = 6
+letters = 100
 duplicates = random.randrange(math.floor(0.02*lines), math.ceil(0.05*lines))
 f = open('1.in','w')
 f.write("input.txt\n" + str(letters))
@@ -23,8 +23,9 @@ for i in range(1, duplicates + 1):
 	index1 = random.randrange(0, len(strs))
 	index2 = random.randrange(0, len(strs))
 	strs.insert(index1, strs[index2])
+	#strs.append(strs[index2])
 for line in strs:
-	output += line + "\n"
+	output += line
 f = open('input.txt','w')
 f.write(output)
 f.close()
