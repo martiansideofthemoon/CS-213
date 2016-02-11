@@ -3,7 +3,7 @@ import string
 import math
 def id_generator(size = 6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
-lines = 100000
+lines = 1000000
 letters = 100
 duplicates = random.randrange(math.floor(0.02*lines), math.ceil(0.05*lines))
 f = open('1.in','w')

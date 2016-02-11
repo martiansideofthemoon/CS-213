@@ -1,6 +1,8 @@
 #include "mfile.hpp"
 #include <algorithm>
 #include <vector>
+#include <iostream>
+using namespace std;
 
 int MFile::init(string fname, int line_size) {
 	m_line_size = line_size;
@@ -14,7 +16,6 @@ int MFile::init(string fname, int line_size) {
 
 string MFile::readNext() {
 	m_fs.read(buf, m_line_size);
-
 	buf[m_fs.gcount()] = 0;
 	string s(buf);
   return s;
@@ -33,6 +34,7 @@ vector<string> MFile::readLines(vector<int> line_nums) {
 }
 
 int MFile::close() {
+	delete [] buf;
 	return 0;
 }
 
