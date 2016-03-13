@@ -45,13 +45,13 @@ public:
 		}
 	}
 
-	// void printVector() {
-	// 	cout << "The vector is: ";
-	// 	for (int i = 1; i <= size; i++) {
-	// 		cout << elements[i] << " ";
-	// 	}
-	// 	cout << endl;
-	// }
+	void printVector() {
+		cout << "The vector is: ";
+		for (int i = 1; i <= size; i++) {
+			cout << "(" << elements[i].getStep() << "," << elements[i].getType() << "," << elements[i].getSubject() << ") ";
+		}
+		cout << endl;
+	}
 
 	void fix_max(int i) {
 		int grandparent = i/4;

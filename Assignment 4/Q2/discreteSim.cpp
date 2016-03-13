@@ -64,21 +64,28 @@ class Event {
 	private:
 		int step;
 		char type; // death, infection, cell division
-		Microbe* subject;
+		int subject;
 	public:
 		Event() {
-			step = 0;
+			step = -1;
 			type = 'd';
-			subject = NULL;
+			subject = 0;
 		}
 
-		Event(int s, int t, Microbe* sub) {
+		Event(int s, int t, int sub) {
 			step = s;
 			type = t;
-			sub = subject;
+			subject = sub;
 		}
 
 		bool operator <(const Event& e) {
+			if (step < e.step) return true;
+			else if (step > e.step) return false;
+			else {
+				if (e.type == 'd' && type != 'd') return true;
+				else if (e.type == 'i' && type == 'c') return true;
+				else return false;
+			}
 			return step < e.step ? true : false;
 		}
 
@@ -90,7 +97,7 @@ class Event {
 			return type;
 		}
 
-		Microbe* getSubject() {
+		int getSubject() {
 			return subject;
 		}
 };
@@ -107,24 +114,23 @@ int main() {
 		culture.insert(pair<int, Microbe*>(i, m1));
 		// Create events for first cell division.
 		// Subsequent divisions scheduled after the first division takes place.
-		Event *e1 = new Event(m1->getN(), 'c', m1);
+		Event *e1 = new Event(m1->getN(), 'c', i);
 		sim.insert(*e1);
 	}
 	cin >> M;
 	for (int i = 0; i < M; i++) {
 		int mic, step;
 		cin >> mic >> step;
-		Microbe* m1 = culture.find(mic)->second;
-		Event *e1 = new Event(step, 'i', m1);
+		Event *e1 = new Event(step, 'i', mic);
 		sim.insert(*e1);
 	}
-	int timestep = 0, global_identity = N, population = N;
+	int timestep = 1, global_identity = N, population = N;
 	cin >> T;
-	while(timestep <= T) {
+	while(timestep <= T && timestep >= 0) {
 		// Change data structure values, update output
 		Event nextEvent = sim.getMin();
 		while(timestep == nextEvent.getStep()) {
-			Microbe* subject = nextEvent.getSubject();
+			Microbe* subject = culture[nextEvent.getSubject()];
 			if (nextEvent.getType() == 'c') {
 				// Always check whether microbe is infected / dead!
 				if (!(subject->isInfected() || subject->isDead())) {
@@ -134,15 +140,15 @@ int main() {
 					population++;
 					subject->reduceStrength();
 					// Schedule events for m1's division and subject's next division
-					Event *e1 = new Event(timestep + m1->getN(), 'c', m1);
+					Event *e1 = new Event(timestep + m1->getN(), 'c', m1->getIdentity());
 					sim.insert(*e1);
-					Event *e2 = new Event(timestep + subject->getN(), 'c', subject);
+					Event *e2 = new Event(timestep + subject->getN(), 'c', subject->getIdentity());
 					sim.insert(*e2);
 				}
 			} else if (nextEvent.getType() == 'i') {
 				subject->infect();
 				// Schedule subject's death
-				Event *e1 = new Event(timestep + subject->getStrength(), 'd', subject);
+				Event *e1 = new Event(timestep + subject->getStrength(), 'd', subject->getIdentity());
 				sim.insert(*e1);
 			} else if (nextEvent.getType() == 'd') {
 				subject->kill();
@@ -155,4 +161,5 @@ int main() {
 		// Get to next event time instant
 		timestep = nextEvent.getStep();
 	}
+	cout << population << endl;
 }
