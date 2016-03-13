@@ -174,7 +174,7 @@ public:
 		size--;
 		while (i <= size/2) {
 			int min = minChildGrandChildPosition(i);
-			if (elements[i] <= elements[min]) {
+			if (elements[i] < elements[min]) {
 				// Element already forms the min-max heap
 				break;
 			}
@@ -214,7 +214,7 @@ public:
 		size--;
 		while (i <= size/2) {
 			int max = maxChildGrandChildPosition(i);
-			if (elements[i] >= elements[max]) {
+			if (elements[max] < elements[i]) {
 				// Element already forms the min-max heap
 				break;
 			}
