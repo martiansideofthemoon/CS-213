@@ -82,11 +82,26 @@ class Event {
 			if (step < e.step) return true;
 			else if (step > e.step) return false;
 			else {
-				if (e.type == 'd' && type != 'd') return true;
-				else if (e.type == 'i' && type == 'c') return true;
-				else return false;
+				// Both have the same timestep, check type of event
+				if (type == 'd' && e.type == 'd') {
+					if (subject <= e.subject) return true;
+					else return false;
+				} else if (type == 'd' && e.type != 'd') {
+					return true;
+				} else if (type == 'i' && e.type == 'd') {
+					return false;
+				} else if (type == 'i' && e.type == 'i') {
+					if (subject <= e.subject) return true;
+					else return false;
+				} else if (type == 'i' && e.type == 'c') {
+					return true;
+				} else if (type == 'c' && e.type != 'c') {
+					return false;
+				} else if (type == 'c' && e.type == 'c') {
+					if (subject <= e.subject) return true;
+					else return false;
+				} else return true;
 			}
-			return step < e.step ? true : false;
 		}
 
 		int getStep() {
@@ -124,9 +139,9 @@ int main() {
 		Event *e1 = new Event(step, 'i', mic);
 		sim.insert(*e1);
 	}
-	int timestep = 1, global_identity = N, population = N;
+	int timestep = 0, global_identity = N, population = N;
 	cin >> T;
-	while(timestep <= T && timestep >= 0) {
+	while(timestep <= T && timestep >= 0) { // timestep >= 0 ensures events aren't over
 		// Change data structure values, update output
 		Event nextEvent = sim.getMin();
 		while(timestep == nextEvent.getStep()) {
@@ -139,17 +154,27 @@ int main() {
 					global_identity++;
 					population++;
 					subject->reduceStrength();
-					// Schedule events for m1's division and subject's next division
+					// Schedule events for m1's division and subject's next division / death
 					Event *e1 = new Event(timestep + m1->getN(), 'c', m1->getIdentity());
 					sim.insert(*e1);
-					Event *e2 = new Event(timestep + subject->getN(), 'c', subject->getIdentity());
-					sim.insert(*e2);
+					if (subject->getStrength() == 0) {
+						// Last division done, schedule death
+						Event *e2 = new Event(timestep + subject->getN(), 'd', subject->getIdentity());
+						sim.insert(*e2);
+					} else {
+						// Prepare for next division
+						Event *e2 = new Event(timestep + subject->getN(), 'c', subject->getIdentity());
+						sim.insert(*e2);
+					}
+
 				}
 			} else if (nextEvent.getType() == 'i') {
-				subject->infect();
-				// Schedule subject's death
-				Event *e1 = new Event(timestep + subject->getStrength(), 'd', subject->getIdentity());
-				sim.insert(*e1);
+				if (!subject->isDead()) {
+					subject->infect();
+					// Schedule subject's death
+					Event *e1 = new Event(timestep + subject->getStrength(), 'd', subject->getIdentity());
+					sim.insert(*e1);
+				}
 			} else if (nextEvent.getType() == 'd') {
 				subject->kill();
 				cout << "d " << subject->getIdentity() << " " << timestep << endl;
