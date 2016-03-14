@@ -7,7 +7,7 @@ using namespace std;
 template<class T>
 class Predicate {
 	public:
-		virtual bool toDelete(T elem) {
+		virtual bool toDelete(T a) {
 			return true;
 		}
 };
@@ -235,12 +235,12 @@ public:
 		}
 	}
 
-	void deleteElems(Predicate<T> *predObject) {
+	void deleteElems(Predicate<T> &predObject) {
 		vector<T> remaining_elements;
 		while (size != 0) {
 			T elem = elements[size];
 			elements.pop_back();
-			if (!predObject->toDelete(elem)) {
+			if (!predObject.toDelete(elem)) {
 				remaining_elements.push_back(elem);
 			}
 			size -= 1;

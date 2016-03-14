@@ -1,4 +1,4 @@
-#include "MinMaxHeap.hpp"
+#include "minMaxHeap.hpp"
 #include <iostream>
 using namespace std;
 
@@ -41,7 +41,7 @@ int main() {
 				break;
 			case 'f':
 				subPredicate<int> c;
-				a.deleteElems(&c);
+				a.deleteElems(c);
 				break;
 		}
 		cin >> command;

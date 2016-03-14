@@ -150,6 +150,7 @@ int main() {
 				// Always check whether microbe is infected / dead!
 				if (!(subject->isInfected() || subject->isDead())) {
 					Microbe* m1 = new Microbe(global_identity, subject->getStrength());
+					culture.insert(pair<int, Microbe*>(global_identity, m1));
 					cout << "b " << global_identity << " " << timestep << endl;
 					global_identity++;
 					population++;
