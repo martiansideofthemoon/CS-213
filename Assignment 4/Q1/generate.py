@@ -2,8 +2,8 @@ import random
 import string
 import math
 import operator
-numbers = 1000
-ops = 1000000
+numbers = 100000
+ops = 100000
 operators = ["i", "g", "h", "d", "e", "f"]
 ip = ""
 output = ""
@@ -32,9 +32,9 @@ for i in range(0, ops):
 		elements = [x for x in elements if x % 2 != 0]
 	ip += "\n"
 ip += "q\n";
-f = open('input.txt','w')
+f = open('input5.txt','w')
 f.write(ip)
 f.close()
-f = open('output.txt','w')
+f = open('output5.txt','w')
 f.write(output)
 f.close()

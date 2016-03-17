@@ -45,6 +45,5 @@ int main () {
         heap->deleteElems(obj);
       }
     }
-    heap->printVector();
   }
 }
